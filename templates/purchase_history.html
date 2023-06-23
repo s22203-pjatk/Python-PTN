@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Purchase History</h1>
+    <a href="/admin" class="btn btn-primary">Admin Panel</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Part</th>
+                <th>User</th>
+                <th>Quantity</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.part.name }}</td>
+                    <td>{{ purchase.user.username }}</td>
+                    <td>{{ purchase.quantity }}</td>
+                    <td>{{ purchase.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

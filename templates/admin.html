@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Admin Panel</h1>
+    <a href="/home" class="btn btn-primary">Home</a>
+    <h2>Manage Parts</h2>
+    <div>
+        <form method="post" action="/admin">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for part in parts %}
+                        <tr>
+                            <td>{{ part.name }}</td>
+                            <td>
+                                <input type="number" class="form-control" name="price_{{ part.id }}" value="{{ part.price }}" step="0.01">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="stock_{{ part.id }}" value="{{ part.quantity }}">
+                            </td>
+                            <td>
+                                <a href="/admin/delete_part/{{ part.id }}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+        <a href="{{ url_for('add_part') }}" class="btn btn-primary">Add New Part</a>
+        <a href="{{ url_for('purchase_history') }}" class="btn btn-primary">Purchase History</a>
+        <a href="/logout" class="btn btn-secondary">Log Out</a>
+    </div>
+{% endblock %}

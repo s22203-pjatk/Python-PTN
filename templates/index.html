@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Welcome to the Car Parts Store</h1>
+    {% if 'username' not in session %}
+        <p>Please log in or register to access the store.</p>
+        <a href="/login" class="btn btn-primary">Log In</a>
+        <a href="/register" class="btn btn-secondary">Register</a>
+    {% else %}
+        <p>Welcome, {{ session['username'] }}!</p>
+        <a href="/home" class="btn btn-primary">Enter Store</a>
+        <a href="/logout" class="btn btn-secondary">Log Out</a>
+    {% endif %}
+{% endblock %}

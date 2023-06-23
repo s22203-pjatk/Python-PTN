@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Welcome, {{ session['username'] }}!</h1>
+    {% if session['role'] == 'admin' %}
+    <a href="/admin" class="btn btn-primary">Admin Panel</a>
+    {% endif %}
+    <h2>Available Parts</h2>
+    {% for part in parts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <img src="{{ url_for('static', filename=part.image) }}" alt="{{ part.name }}" style="height: 200px;">
+                    </div>
+                    <div class="col">
+                        <h3 class="card-title">{{ part.name }}</h3>
+                        <p class="card-text">Price: {{ part.price }} PLN</p>
+                        {% if part.quantity > 0 %}
+                        <form method="post" action="/purchase">
+                            <input type="hidden" name="part_id" value="{{ part.id }}">
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Quantity:</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="{{ part.quantity }}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Buy</button>
+                        </form>
+                        {% else %}
+                        <form method="post" action="/purchase">
+                            <input type="hidden" name="part_id" value="{{ part.id }}">
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Quantity:</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity" value="0" disabled>
+                            </div>
+                            <button type="submit" class="btn btn-primary" disabled>Buy</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="/logout" class="btn btn-secondary">Log Out</a>
+{% endblock %}
